@@ -54,7 +54,7 @@ export default function ChangeTheme() {
   }, []);
   
   return (
-    <select className="select select-ghost w-full max-w-sm" data-choose-theme>
+    <select className="select select-ghost select-sm" data-choose-theme>
       {
         renderThemeOptions()
       }
