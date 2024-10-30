@@ -1,11 +1,11 @@
 "use client";
 
-import SwapTheme, { SwapThemeMobile} from "components/theme";
+import SwapTheme, { SwapThemeMobile} from "@/components/SwapTheme";
 import { ThemeContext } from "@/context/ThemeContext";
 import Link from "next/link";
 import { useContext } from "react";
 
-export default function Navbar({ links }: { links: Array<Record<string, string>> }) {
+export default function NavBar({ links }: { links: Array<Record<string, string>> }) {
   const { changeTheme } = useContext(ThemeContext);
 
   return (
@@ -55,7 +55,6 @@ export default function Navbar({ links }: { links: Array<Record<string, string>>
             );
           })
         }
-        <SwapTheme handleOnClick={changeTheme} />
       </ul>
 
       <div className="hidden sm:flex gap-2">
@@ -65,6 +64,7 @@ export default function Navbar({ links }: { links: Array<Record<string, string>>
         <a href="" className="btn btn-circle btn-ghost btn-sm text-xl">
           <i className="bx bxl-linkedin" />
         </a>
+        <SwapTheme handleOnClick={changeTheme} />
       </div>
     </nav>
   );
