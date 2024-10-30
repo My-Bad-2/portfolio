@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
-import { themeChange } from "theme-change";
+import type React from "react";
 
 const themes: string[] = [
   "light",
@@ -38,26 +37,51 @@ const themes: string[] = [
   "sunset",
 ];
 
-const ThemeOption: React.FC<{ val: string }> = ({ val }) => {
-  return <option value={val.toString()}>{val.toString()}</option>
+interface RenderProps {
+  handleOnClick: (e?: any) => void;
 };
 
-const renderThemeOptions = () => {
+const RenderTheme: React.FC<{ handle?: (e?: any) => void, val: string }> = ({ handle, val }) => {
+  return (
+    <li onClick={handle}>
+      <input type="radio" name="theme-dropdown" className="btn btn-sm btn-block btn-ghost justify-start" aria-label={val} value={val} />
+    </li>
+  );
+};
+
+function RenderThemes({ handleOnClick }: RenderProps) {
   return themes.map(theme => {
-    return <ThemeOption key={theme} val={theme} />;
+    return <RenderTheme key={theme} handle={handleOnClick} val={theme} />
   });
 };
 
-export default function ChangeTheme() {
-  useEffect(() => {
-    themeChange(false);
-  }, []);
-  
+export function SwapThemeMobile({ handleOnClick }: {
+  handleOnClick?: (e?: any) => void;
+}) {
   return (
-    <select className="select select-ghost select-sm" data-choose-theme>
-      {
-        renderThemeOptions()
-      }
-    </select>
+    <li>
+      <details>
+        <summary className="btn">Theme</summary>
+        <ul className="flex-nowrap overflow-y-auto max-h-40 menu z-[1] bg-base-200 p-6 rounded-box shadow w-36 gap-2 self-center">
+          <RenderThemes handleOnClick={handleOnClick!} />
+        </ul>
+      </details>
+    </li>
   );
-};
+}
+
+export default function SwapTheme({ handleOnClick }: {
+  handleOnClick?: (e?: any) => void;
+}) {
+  return (
+    <div className="dropdown dropdown-end">
+      <div tabIndex={0} role="button" className="btn m-1">
+        Theme
+        <i className="bx bx-chevron-down" />
+      </div>
+      <ul className="flex-nowrap overflow-y-auto max-h-40 dropdown-content menu z-[1] bg-base-200 p-6 rounded-box shadow w-56 gap-2">
+        <RenderThemes handleOnClick={handleOnClick!} />
+      </ul>
+    </div>
+  );
+}
